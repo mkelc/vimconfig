@@ -1,0 +1,57 @@
+alias mo="sudo mount"
+alias umo="sudo umount"
+alias cpr="rsync -v --progress"
+alias cps="sudo rsync -v --progress"
+
+function tday () {
+   local t=`date -I`
+   sudo mount /trn/carrier
+   sudo mkdir -p /trn/carrier/downloads/$t
+   sudo ln -s /trn/carrier/downloads/$t /trn/today
+}
+
+function uday () {
+   sudo sync
+   sudo rm -vf /trn/today
+   sudo sync
+   sudo umount /trn/carrier
+}
+
+function cday () {
+   sudo rsync -v --progress $* /trn/today
+}
+
+function dday () {
+   local current=`pwd`
+   cd /trn/today
+   sudo rsync -v --progress $* $current
+   cd $current
+}
+
+function sday () {
+   local current=`pwd`
+   local t=`date -I`
+   test -d ~/downloads || mkdir ~/downloads
+   cd ~/downloads
+   test -d $t || mkdir $t
+   cd $t
+   for i in /trn/today/*; do
+      rsync -v --progress $i ~/downloads/$t
+   done
+   cd $current
+}
+
+function _dday () {
+    local cur prev
+    COMPREPLY=()
+    cur=${COMP_WORDS[COMP_CWORD]}
+    prev=${COMP_WORDS[COMP_CWORD-1]}
+    COMPREPLY=( $(cd /trn/today && compgen -o filenames -G "$cur*") )
+}
+
+complete -F _dday -o filenames dday
+
+function lday () {
+   sudo ls -lah /trn/today/ 
+}
+

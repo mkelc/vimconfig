@@ -1,0 +1,8 @@
+# set  ANT environment for TransTool
+export ANT_HOME=~/tools/java/apache-ant-1.7.0
+export ANT_OPTS=-Xmx512m
+export JAVA_HOME=/usr/local/lib/jdk1.6.0_02
+export IDEA_JDK=/usr/local/lib/jdk1.6.0_02 
+export BUILD_TYPE=test_unix
+
+PATH=/usr/lib/idea/bin:$JAVA_HOME/bin:$ANT_HOME/bin:$HOME/bin:$PATH

@@ -1,0 +1,5 @@
+if v:servername != "CREAM" 
+   let myrtp= "$HOME/.myvim," . &runtimepath
+   exec "set runtimepath=" . myrtp
+   source $HOME/.myvim/vimrc
+endif
